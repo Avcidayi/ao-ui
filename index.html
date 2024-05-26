@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connect ArConnect Wallet</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <div class="container">
+        <div class="connect-box">
+            <h1>Connect to ArConnect Wallet</h1>
+            <button type="button" id="connectArConnect" class="btn arconnect-btn">Connect ArConnect</button>
+        </div>
+        <div id="terminal-container" class="terminal-container" style="display:none;">
+            <iframe id="terminal" src="" frameborder="0"></iframe>
+        </div>
+        <div class="discord-logo">
+            <a href="https://discord.gg/9cXaTrMx" target="_blank">
+                <img src="https://sm.ign.com/ign_tr/tech/d/discord/discord_2qn1.jpg" alt="Discord">
+            </a>
+        </div>
+    </div>
+    <script>
+        // ArConnect integration JavaScript
+        document.getElementById('connectArConnect').addEventListener('click', async () => {
+            if (window.arweaveWallet) {
+                try {
+                    // Request connection to ArConnect
+                    await window.arweaveWallet.connect(["ACCESS_ADDRESS", "SIGN_TRANSACTION"]);
+                    console.log("ArConnect connected");
+                    // Show the terminal iframe
+                    document.getElementById('terminal-container').style.display = 'block';
+                    document.getElementById('terminal').src = "https://sh_ao.g8way.io/";
+                } catch (error) {
+                    console.error("Failed to connect to ArConnect", error);
+                    alert("Failed to connect to ArConnect. Please try again.");
+                }
+            } else {
+                alert("ArConnect wallet not installed. Please install it first.");
+            }
+        });
+
+        // Check if ArConnect is installed
+        if (!window.arweaveWallet) {
+            console.warn("ArConnect is not installed.");
+        }
+    </script>
+</body>
+</html>
